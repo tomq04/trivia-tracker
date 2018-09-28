@@ -1,0 +1,10 @@
+To do
+Web Form to store player names
+Save player names locally
+"Start game" button
+Concat all player names with form to store points
+Web form to ask how many questions
+Web form to ask who answered question 1 correctly (with player names)
+Iterate through questions
+Display leader/winner
+Display chart/table or graph of point distribution
