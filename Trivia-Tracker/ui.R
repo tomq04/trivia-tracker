@@ -8,7 +8,8 @@
 #
 
 library(shiny)
-
+# if (!require("DT")) install.packages('DT')
+library(DT)
 
 # Define the fields we want to save from the form
 fields <- "name"
