@@ -26,15 +26,29 @@ shinyApp(
     
     # Whenever a field is filled, aggregate all form data
     formData <- reactive({
-      data <- sapply(fields, function(x) input[[x]])
+      data <- sapply(fields, function(t) input[[t]])
       data
     })
+    
+    #load data function, if already written then load it back in
+    loadData <- function() {
+      if (exists("responses")) {
+        responses
+      }
+    }
     
     # When the Submit button is clicked, save the form data
     observeEvent(input$submit, {
       save_data_flatfile <- function(responses) {
-        data <- t(responses)
+        data <- c(responses)
         file_name <- sprintf("%s_%s.csv", as.integer(Sys.time()), digest::digest(data))
+        
+    # Show the previous responses
+    # (update with current response when Submit is clicked)
+    output$responses <- DT::renderDataTable({
+      input$submit
+      loadData()})
+        
     # Write the file to the local system
         write.csv(responses, file = file.path(outputDir, file_name), 
                   row.names = FALSE, quote = TRUE)
@@ -42,11 +56,7 @@ shinyApp(
       save_data_flatfile(formData())
     })
     
-    # Show the previous responses
-    # (update with current response when Submit is clicked)
-    # output$responses <- DT::renderDataTable({
-    # input$submit
-    #  loadData()
+
          
   }
 )
